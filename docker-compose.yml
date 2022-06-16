@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  challenge-pg-db:
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: challenge
+    ports:
+      - '5432:5432'
+    volumes:
+      - .docker/pgdbdata:/var/lib/postgresql/data
