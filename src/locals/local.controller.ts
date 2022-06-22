@@ -17,9 +17,9 @@ export class LocalController {
     status: HttpStatus.CREATED,
     description: 'Criado com sucesso.',
   })
-  async create(@Body() data: CreateLocalDto, @Res() response: Response): Promise<void> {
+  async create(@Body() data: CreateLocalDto, @Res() response: Response): Promise<Response> {
     const local = await this.localService.createLocal(data)
-    response.status(HttpStatus.CREATED).json({ local })
+    return response.status(HttpStatus.CREATED).json({ local })
   }
 
   @Get()
@@ -28,19 +28,20 @@ export class LocalController {
     status: HttpStatus.OK,
     description: 'Listado com sucesso.',
   })
-  async findAll(@Res() response: Response): Promise<void> {
+  async findAll(@Res() response: Response): Promise<Response> {
     const [locals, total] = await this.localService.getAllLocals()
-    response.status(HttpStatus.OK).json({ locals, total })
+    return response.status(HttpStatus.OK).json({ locals, total })
   }
+
   @Get('/countries')
   @ApiOperation({ summary: 'Listar possiveis paises' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Listado com sucesso.',
   })
-  async getCountryList(@Res() response: Response): Promise<void> {
+  async getCountryList(@Res() response: Response): Promise<Response> {
     const countries = await this.localService.getCountryList()
-    response.status(HttpStatus.OK).json({ countries })
+    return response.status(HttpStatus.OK).json({ countries })
   }
 
   @Put(':id')
@@ -56,13 +57,13 @@ export class LocalController {
     status: HttpStatus.OK,
     description: 'Atualizado com Sucesso.',
   })
-  async findOne(
+  async update(
     @Param('id') id: string,
     @Body() data: UpdateLocalDto,
     @Res() response: Response,
-  ): Promise<void> {
+  ): Promise<Response> {
     const local = await this.localService.updateLocal({ id, ...data })
-    response.status(HttpStatus.OK).json({ local })
+    return response.status(HttpStatus.OK).json({ local })
   }
 
   @Delete(':id')
@@ -77,8 +78,8 @@ export class LocalController {
     status: HttpStatus.NO_CONTENT,
     description: 'No content.',
   })
-  async remove(@Param('id') id: string, @Res() response: Response): Promise<void> {
+  async remove(@Param('id') id: string, @Res() response: Response): Promise<Response> {
     await this.localService.deleteLocal(id)
-    response.status(HttpStatus.NO_CONTENT)
+    return response.status(HttpStatus.NO_CONTENT)
   }
 }

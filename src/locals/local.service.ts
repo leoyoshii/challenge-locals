@@ -15,10 +15,6 @@ export class LocalService {
     private readonly httpService: HttpService,
   ) {}
 
-  async findOneByCountryAndlocation(country: string, location: string): Promise<Local | undefined> {
-    return await this.localRepository.findOne({ where: { country, location } })
-  }
-
   async createLocal({ country, location, meta }: CreateLocalDto): Promise<Local> {
     const flagUrl = await this.getFlagUrl(country)
 
@@ -120,5 +116,12 @@ export class LocalService {
     }
 
     return metaDate
+  }
+
+  private async findOneByCountryAndlocation(
+    country: string,
+    location: string,
+  ): Promise<Local | undefined> {
+    return await this.localRepository.findOne({ where: { country, location } })
   }
 }
