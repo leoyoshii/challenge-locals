@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import { LocalModule } from './locals/local.module'
 
 const port = 3000
 
@@ -14,7 +15,9 @@ async function bootstrap() {
     .addTag('CountryChallenge')
     .build()
 
-  const document = SwaggerModule.createDocument(app, config)
+  const document = SwaggerModule.createDocument(app, config, {
+    include: [LocalModule],
+  })
 
   SwaggerModule.setup('/docs', app, document, {
     customSiteTitle: 'Country Challenge Swagger',
