@@ -21,9 +21,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up": "docker-compose up",
     "docker:down": "docker-compose down",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config db/database.config.ts"
   },
   "dependencies": {
+    "@nestjs/axios": "^0.0.8",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
@@ -35,7 +37,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.4.0",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
