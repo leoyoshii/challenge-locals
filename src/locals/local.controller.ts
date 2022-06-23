@@ -81,6 +81,6 @@ export class LocalController {
   async remove(@Param('id') id: string, @Res() response: Response): Promise<Response> {
     await this.localService.deleteLocal(id)
 
-    return response.status(HttpStatus.NO_CONTENT).json({})
+    return response.status(HttpStatus.NO_CONTENT).json()
   }
 }

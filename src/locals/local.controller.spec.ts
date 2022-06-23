@@ -163,13 +163,13 @@ describe('LocalController', () => {
     it('should delete a local with sucess', async () => {
       const idmocked = faker.datatype.uuid()
 
-      jest
+      const localServiceDeleteLocal = jest
         .spyOn(localService, 'deleteLocal')
         .mockImplementation(async (): Promise<void> => Promise.resolve())
 
-      const response = await localController.remove(idmocked, responseMock)
+      await localController.remove(idmocked, responseMock)
 
-      expect(response.status).toStrictEqual(204)
+      expect(localServiceDeleteLocal).toBeCalledTimes(1)
     })
   })
 })
