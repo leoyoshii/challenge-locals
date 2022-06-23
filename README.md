@@ -55,3 +55,7 @@ $ npm run test
 # test coverage
 $ npm run test:cov
 ```
+
+## Swagger UI
+
+While the application is running, open your browser and navigate to <http://localhost:3000/docs>. You should see the Swagger UI.
