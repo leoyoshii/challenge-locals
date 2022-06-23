@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 
 export class UpdateLocalDto {
-  id?: string
+  id: string
 
   @ApiProperty({
     example: 'Maringá',

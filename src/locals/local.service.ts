@@ -16,11 +16,7 @@ export class LocalService {
   ) {}
 
   async createLocal({ country, location, meta }: CreateLocalDto): Promise<Local> {
-    const flagUrl = await this.getFlagUrl(country)
-
     const checkCountryAndLocation = await this.findOneByCountryAndlocation(country, location)
-
-    const validatedDate = await this.validateDate(meta)
 
     if (checkCountryAndLocation) {
       throw new HttpException(
@@ -28,6 +24,10 @@ export class LocalService {
         HttpStatus.CONFLICT,
       )
     }
+
+    const flagUrl = await this.getFlagUrl(country)
+
+    const validatedDate = await this.validateDate(meta)
 
     const localToAdd = this.localRepository.create({
       country,
@@ -64,8 +64,10 @@ export class LocalService {
       }
     }
 
+    const validatedDate = await this.validateDate(meta)
+
     findedLocal.location = location && location
-    findedLocal.meta = meta && meta
+    findedLocal.meta = meta && validatedDate
 
     return this.localRepository.save(findedLocal)
   }
@@ -86,7 +88,7 @@ export class LocalService {
   }
 
   //utils
-  private async getFlagUrl(country: string): Promise<string> {
+  async getFlagUrl(country: string): Promise<string> {
     const { data } = await this.httpService.axiosRef
       .get<IRestCountryResponse[]>(`https://restcountries.com/v3.1/translation/${country}`)
       .catch(() => {
@@ -100,10 +102,8 @@ export class LocalService {
     return data[0].flags.png
   }
 
-  private async validateDate(date: Date | string): Promise<Date> {
+  async validateDate(date: Date | string): Promise<Date> {
     const metaDate = new Date(date)
-
-    console.log(metaDate)
 
     const today = new Date()
 
@@ -118,10 +118,7 @@ export class LocalService {
     return metaDate
   }
 
-  private async findOneByCountryAndlocation(
-    country: string,
-    location: string,
-  ): Promise<Local | undefined> {
+  async findOneByCountryAndlocation(country: string, location: string): Promise<Local | undefined> {
     return await this.localRepository.findOne({ where: { country, location } })
   }
 }

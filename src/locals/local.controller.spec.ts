@@ -135,7 +135,7 @@ describe('LocalController', () => {
   describe('update()', () => {
     it('should update a local with sucess', async () => {
       const idmocked = faker.datatype.uuid()
-      const updateLocalDto: UpdateLocalDto = {
+      const updateLocalDto: Omit<UpdateLocalDto, 'id'> = {
         location: faker.address.cityName(),
         meta: faker.date.future(),
       }

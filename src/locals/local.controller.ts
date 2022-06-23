@@ -59,7 +59,7 @@ export class LocalController {
   })
   async update(
     @Param('id') id: string,
-    @Body() data: UpdateLocalDto,
+    @Body() data: Omit<UpdateLocalDto, 'id'>,
     @Res() response: Response,
   ): Promise<Response> {
     const local = await this.localService.updateLocal({ id, ...data })

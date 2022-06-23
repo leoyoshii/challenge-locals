@@ -1,8 +1,8 @@
 export interface IRestCountryResponse {
-  name: {
-    common: string
-    official: string
-    nativeName: {
+  name?: {
+    common?: string
+    official?: string
+    nativeName?: {
       [key: string]: {
         official: string
         common: string
@@ -11,12 +11,12 @@ export interface IRestCountryResponse {
   }
   translations: {
     [key: string]: {
-      official: string
+      official?: string
       common: string
     }
   }
   flags: {
     png: string
-    svg: string
+    svg?: string
   }
 }
