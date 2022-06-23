@@ -40,7 +40,12 @@ export class LocalService {
   }
 
   async deleteLocal(id: string): Promise<void> {
-    await this.localRepository.delete(id)
+    const deleted = await this.localRepository.delete(id)
+
+    if (deleted.affected === 0) {
+      throw new HttpException(`Nao foi encontrado Local com id:${id}`, HttpStatus.NOT_FOUND)
+    }
+    return
   }
 
   async updateLocal({ id, location, meta }: UpdateLocalDto): Promise<Local> {
